@@ -24,6 +24,7 @@ function addAliases(aliases, compiledResources, activeAliasName) {
       return aliases.reduce((acc, alias, index) => {
         acc[`${lambdaName}Alias${alias === activeAliasName ? '' : index}`] = {
           Type: 'AWS::Lambda::Alias',
+          UpdateReplacePolicy: 'Retain',
           Properties: {
             Name: alias.replace(/[^\w-_]/g, '-'),
             FunctionName: {

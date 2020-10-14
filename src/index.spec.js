@@ -115,6 +115,7 @@ describe('Serverless Simple Alias Plugin', () => {
                 "Name": "LIVE",
               },
               "Type": "AWS::Lambda::Alias",
+              "UpdateReplacePolicy": "Retain",
             },
           ],
           Array [
@@ -139,6 +140,7 @@ describe('Serverless Simple Alias Plugin', () => {
                 "Name": "LIVE",
               },
               "Type": "AWS::Lambda::Alias",
+              "UpdateReplacePolicy": "Retain",
             },
           ],
         ]
