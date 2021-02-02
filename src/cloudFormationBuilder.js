@@ -1,12 +1,14 @@
 'use strict';
 
+const skipKeyword = 'warmer';
+
 function addAliases(aliases, compiledResources, activeAliasName) {
   const functionEntries = getResources(compiledResources, 'AWS::Lambda::Function');
 
   // Get the lambdaVersion resources as an entries-array, to make searching easier
   const lambdaVersionEntries = getResources(compiledResources, 'AWS::Lambda::Version');
 
-  const functionNames = functionEntries.map((f) => f[0]);
+  const functionNames = functionEntries.map((f) => f[0]).filter((name) => !name.includes(skipKeyword));
 
   // Create an Alias for each function first. This is required regardless of whether the function
   // has an HTTP event or not.
@@ -89,10 +91,12 @@ function addAPIGatewayConfig(activeAliasName, compiledResources) {
   lambdaPermissions.forEach(([resourceName, resource]) => {
     // Get the existing function name from the resource, then use it to refer to the alias-resource
     const existingLambdaName = resource.Properties.FunctionName['Fn::GetAtt'][0];
-    compiledResources[resourceName].Properties.FunctionName = {
-      Ref: `${existingLambdaName}Alias`,
-    };
-    compiledResources[resourceName].DependsOn = [`${existingLambdaName}Alias`];
+    if (!existingLambdaName.includes(skipKeyword)) {
+      compiledResources[resourceName].Properties.FunctionName = {
+        Ref: `${existingLambdaName}Alias`,
+      };
+      compiledResources[resourceName].DependsOn = [`${existingLambdaName}Alias`];
+    }
   });
 
   return compiledResources;
