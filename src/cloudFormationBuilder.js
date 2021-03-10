@@ -95,7 +95,7 @@ function addAPIGatewayConfig(activeAliasName, compiledResources) {
   lambdaPermissions.forEach(([resourceName, resource]) => {
     // Get the existing function name from the resource, then use it to refer to the alias-resource
     const existingLambdaName = resource.Properties.FunctionName['Fn::GetAtt'][0];
-    if (skipKeywords.every((skipKeyword) => !existingLambdaName.includes(skipKeyword))) {
+    if (skipKeywords.every((skipKeyword) => !existingLambdaName.toLowerCase().includes(skipKeyword))) {
       compiledResources[resourceName].Properties.FunctionName = {
         Ref: `${existingLambdaName}Alias`,
       };
