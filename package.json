@@ -1,6 +1,6 @@
 {
   "name": "@zigzag-dev/serverless-simple-alias",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Serverless plugin for creating Lambda aliases without imposing a workflow (YMMV)",
   "main": "src/index.js",
   "repository": "git@github.com:zigzag-dev/serverless-simple-alias.git",

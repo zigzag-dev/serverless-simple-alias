@@ -1,6 +1,6 @@
 'use strict';
 
-const skipKeywords = ['warmer', 'daily', 'hourly', 'weekly', 'monthly'];
+const skipKeywords = ['warmup', 'warmer', 'daily', 'hourly', 'weekly', 'monthly'];
 
 function addAliases(aliases, compiledResources, activeAliasName) {
   const functionEntries = getResources(compiledResources, 'AWS::Lambda::Function');
