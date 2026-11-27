@@ -16,54 +16,36 @@
   "author": "zig-zag.Inc",
   "license": "Apache-2.0",
   "scripts": {
-    "lint": "eslint --max-warnings=0 --fix src/",
-    "verify": "eslint --max-warnings=0 src/",
-    "test": "npm-run-all test:report",
+    "lint": "eslint --max-warnings=0 --fix .",
+    "verify": "eslint --max-warnings=0 .",
+    "test": "jest --coverage --json --outputFile=test-reports/unit/unit.json",
     "test:unit": "jest",
-    "test:report": "jest --no-cache --coverage --json --outputFile=test-reports/unit/unit.json",
-    "test:reportlist": "jest --no-cache --coverage",
+    "test:reportlist": "jest --coverage",
     "test:snaps": "jest -u",
-    "test:watch": "jest --watchAll",
-    "upload-coverage": "coveralls < test-reports/coverage/lcov.info",
-    "semantic-release": "semantic-release"
+    "test:watch": "jest --watchAll"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm-run-all verify test",
-      "commit-msg": "cz-customizable-ghooks"
-    }
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-customizable"
-    },
-    "cz-customizable": {
-      "config": "config/commitMessageConfig.js"
-    }
-  },
-  "dependencies": {},
   "devDependencies": {
-    "@semantic-release/changelog": "5.0.1",
-    "@semantic-release/git": "9.0.0",
-    "coveralls": "3.1.0",
-    "cz-customizable": "6.3.0",
-    "cz-customizable-ghooks": "2.0.0",
-    "eslint": "7.8.1",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-prettier": "3.1.4",
-    "eslint-plugin-unicorn": "21.0.0",
-    "husky": "4.2.5",
-    "jest": "26.4.2",
-    "npm-run-all": "4.1.5",
-    "prettier": "2.1.1",
-    "semantic-release": "17.1.1"
+    "@eslint/js": "10.0.1",
+    "eslint": "10.15.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-n": "18.6.0",
+    "eslint-plugin-prettier": "5.5.7",
+    "eslint-plugin-unicorn": "80.0.0",
+    "globals": "17.14.0",
+    "jest": "30.5.2",
+    "prettier": "3.10.1"
+  },
+  "overrides": {
+    "glob": "14.0.6",
+    "minimatch": "11.0.9"
   },
   "files": [
     "src"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "engines": {
-    "node": ">=10",
-    "npm": ">=6.9"
+    "node": ">=24"
   }
 }

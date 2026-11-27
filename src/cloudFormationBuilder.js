@@ -32,7 +32,7 @@ function addAliases(aliases, compiledResources, activeAliasName) {
           Type: 'AWS::Lambda::Alias',
           UpdateReplacePolicy: 'Retain',
           Properties: {
-            Name: alias.replace(/[^\w-_]/g, '-'),
+            Name: alias.replaceAll(/[^\w-_]/g, '-'),
             FunctionName: {
               'Fn::GetAtt': [lambdaName, 'Arn'],
             },
@@ -43,7 +43,7 @@ function addAliases(aliases, compiledResources, activeAliasName) {
         return acc;
       }, {});
     })
-    .filter((item) => Boolean(item))
+    .filter(Boolean)
     .reduce((acc, curr) => ({ ...acc, ...curr }), {}); // Flatten the array back to an object;
 
   return aliasConfig;
