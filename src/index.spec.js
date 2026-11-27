@@ -2,7 +2,7 @@ const Plugin = require('./index.js');
 const slsConfig = require('../fixtures/serverless.correct.json');
 
 function getConfig() {
-  const config = JSON.parse(JSON.stringify(slsConfig)); // cheap deep copy
+  const config = structuredClone(slsConfig); // deep copy
 
   // Mock the config.classes.Error class
   config.classes = {
@@ -23,21 +23,21 @@ describe('Serverless Simple Alias Plugin', () => {
       const config = getConfig();
       delete config.service.custom;
 
-      expect(() => new Plugin(config)).toThrowError('Missing custom configuration object');
+      expect(() => new Plugin(config)).toThrow('Missing custom configuration object');
     });
 
     it('should throw an error if there is no custom configuration object with a simpleAlias prop', () => {
       const config = getConfig();
       delete config.service.custom.simpleAlias;
 
-      expect(() => new Plugin(config)).toThrowError('Missing custom.simpleAlias configuration object');
+      expect(() => new Plugin(config)).toThrow('Missing custom.simpleAlias configuration object');
     });
 
     it('should throw an error if there is no activeAlias prop', () => {
       const config = getConfig();
       config.service.custom.simpleAlias.activeAliasName = '';
 
-      expect(() => new Plugin(config)).toThrowError('Missing custom.simpleAlias.activeAliasName property');
+      expect(() => new Plugin(config)).toThrow('Missing custom.simpleAlias.activeAliasName property');
     });
   });
 
@@ -92,22 +92,22 @@ describe('Serverless Simple Alias Plugin', () => {
       expect(actualFunctions.length).toEqual(2);
 
       expect(actualAliases).toMatchInlineSnapshot(`
-        Array [
-          Array [
+        [
+          [
             "WebHookLambdaFunctionAlias",
-            Object {
-              "DependsOn": Array [
+            {
+              "DependsOn": [
                 "WebHookLambdaFunction",
               ],
-              "Properties": Object {
-                "FunctionName": Object {
-                  "Fn::GetAtt": Array [
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
                     "WebHookLambdaFunction",
                     "Arn",
                   ],
                 },
-                "FunctionVersion": Object {
-                  "Fn::GetAtt": Array [
+                "FunctionVersion": {
+                  "Fn::GetAtt": [
                     "WebHookLambdaFunctionJNcivYNMb6OXh1g6GW5oLreszRH5VgX9cPOshMeCro",
                     "Version",
                   ],
@@ -118,21 +118,21 @@ describe('Serverless Simple Alias Plugin', () => {
               "UpdateReplacePolicy": "Retain",
             },
           ],
-          Array [
+          [
             "FooLambdaFunctionAlias",
-            Object {
-              "DependsOn": Array [
+            {
+              "DependsOn": [
                 "FooLambdaFunction",
               ],
-              "Properties": Object {
-                "FunctionName": Object {
-                  "Fn::GetAtt": Array [
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
                     "FooLambdaFunction",
                     "Arn",
                   ],
                 },
-                "FunctionVersion": Object {
-                  "Fn::GetAtt": Array [
+                "FunctionVersion": {
+                  "Fn::GetAtt": [
                     "FooLambdaFunctionJNcivYNMb6OXh1g6GW5oLreszRH5VgX9cPOshMeCro",
                     "Version",
                   ],
@@ -201,18 +201,18 @@ describe('Serverless Simple Alias Plugin', () => {
       );
       expect(actualGatewayMethods.length).toEqual(2); // Still 2, but we have modified the URI to include the active alias
       expect(actualGatewayMethods[0][1].Properties.Integration.Uri['Fn::Join'][1]).toMatchInlineSnapshot(`
-        Array [
+        [
           "arn:",
-          Object {
+          {
             "Ref": "AWS::Partition",
           },
           ":apigateway:",
-          Object {
+          {
             "Ref": "AWS::Region",
           },
           ":lambda:path/2015-03-31/functions/",
-          Object {
-            "Fn::GetAtt": Array [
+          {
+            "Fn::GetAtt": [
               "WebHookLambdaFunction",
               "Arn",
             ],
@@ -221,18 +221,18 @@ describe('Serverless Simple Alias Plugin', () => {
         ]
       `);
       expect(actualGatewayMethods[1][1].Properties.Integration.Uri['Fn::Join'][1]).toMatchInlineSnapshot(`
-        Array [
+        [
           "arn:",
-          Object {
+          {
             "Ref": "AWS::Partition",
           },
           ":apigateway:",
-          Object {
+          {
             "Ref": "AWS::Region",
           },
           ":lambda:path/2015-03-31/functions/",
-          Object {
-            "Fn::GetAtt": Array [
+          {
+            "Fn::GetAtt": [
               "FooLambdaFunction",
               "Arn",
             ],

@@ -66,10 +66,6 @@ class ResolveStageVars {
         ...addAPIGatewayConfig(config.activeAliasName, compiledResources),
       };
     }
-
-    // console.log(cfResources.Resources);
-    // console.log(Object.keys(cfResources.Resources));
-    // console.log(Object.keys(cfResources.Resources).length);
   }
 
   /**

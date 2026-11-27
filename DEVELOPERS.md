@@ -10,7 +10,7 @@ It also explains the basic mechanics of using `git` and `node`
 - [Testing with a Serverless project](#testing-with-a-serverless-project)
 - [Formatting your Source Code](#formatting-your-source-code)
 - [Linting/verifying your Source Code](#lintingverifying-your-source-code)
-- [Semantic Release setup](#semantic-release-setup)
+- [Releasing](#releasing)
 
 See the [contribution guidelines][contributing] if you'd like to contribute to this project.
 
@@ -23,7 +23,7 @@ following products on your development machine:
   [Windows](http://windows.github.com)); [GitHub's Guide to Installing
   Git](https://help.github.com/articles/set-up-git) is a good source of information.
 
-- [Node.js](http://nodejs.org), (version specified in the engines field of [`package.json`](package.json)) which is used to run tests.
+- [Node.js](http://nodejs.org), (version specified in [`.node-version`](.node-version)) which is used to run tests.
 
 ## Project organisation
 
@@ -104,29 +104,15 @@ npm run verify
 npm run lint
 ```
 
-## Semantic Release Setup
+## Releasing
 
-This section is include for informational purposes only.
+The [CI workflow](.github/workflows/ci.yml) runs lint and tests on every pull request and on every
+push to `master`. On a push to `master`, it publishes the package to GitHub Packages when the
+`version` in `package.json` is not published yet. To release a new version, raise `version` in
+`package.json` in your pull request. When the pull request is merged, the workflow publishes it.
+A merge that does not change `version` does not publish anything.
 
-This repo uses [semantic-release][semantic-release] to manage software versions and packaging.
-**There is a one-time setup-step required - WHICH HAS ALREADY BEEN DONE**, which creates a GitHub
-personal access token, an NPM token, and connects them to Travis CI.
-
-One time setup:
-```shell script
-cd this-project-repo
-npx semantic-release-cli setup
-
-? What is your npm registry? https://registry.npmjs.org/
-? What is your npm username? u_glow
-? What is your npm password? [hidden]
-? What is your GitHub username? uglow
-? What is your GitHub password? [hidden]
-? What is your GitHub two-factor authentication code? 
-? What CI are you using? Travis CI
-Please refer to https://github.com/semantic-release/semantic-release/blob/master/docs/recipes/travis.md to configure your .travis.yml file.
-
-```
+Do not run `npm publish` from your computer.
 
 <hr>
 

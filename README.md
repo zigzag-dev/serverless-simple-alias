@@ -2,8 +2,7 @@
 
 [![serverless][sls-image]][sls-url]
 [![npm package][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Coverage Status][coveralls-image]][coveralls-url]
+[![CI][ci-image]][ci-url]
 [![Downloads][downloads-image]][npm-url]
 
 A Serverless plugin to create AWS Lambda aliases without imposing a way-of-working with them. 
@@ -67,10 +66,8 @@ This plugin changes the following generated AWS CloudFormation templates:
 [sls-url]: http://www.serverless.com
 [npm-image]: https://img.shields.io/npm/v/serverless-simple-alias.svg
 [npm-url]: http://npmjs.org/package/serverless-simple-alias
-[travis-image]: https://travis-ci.org/digio/serverless-simple-alias.svg?branch=master
-[travis-url]: https://travis-ci.org/digio/serverless-simple-alias
-[coveralls-image]: https://coveralls.io/repos/github/digio/serverless-simple-alias/badge.svg?branch=master
-[coveralls-url]: https://coveralls.io/github/digio/serverless-simple-alias?branch=master
+[ci-image]: https://github.com/zigzag-dev/serverless-simple-alias/actions/workflows/ci.yml/badge.svg?branch=master
+[ci-url]: https://github.com/zigzag-dev/serverless-simple-alias/actions/workflows/ci.yml
 [downloads-image]: https://img.shields.io/npm/dm/serverless-simple-alias.svg
 
 [complex-plugin]: https://github.com/serverless-heaven/serverless-aws-alias
